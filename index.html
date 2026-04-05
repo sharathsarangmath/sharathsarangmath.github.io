@@ -146,12 +146,13 @@ nav {
 
 .hero h1 {
   font-family: var(--syne);
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(2rem, 7.5vw, 7rem);
   font-weight: 800; line-height: 0.95;
   letter-spacing: -0.03em;
   margin-bottom: 2rem;
 }
 .hero h1 .dim { color: rgba(242,240,235,0.25); }
+  .hero-content { overflow: hidden; }
 
 .hero-desc {
   font-size: 14px; color: rgba(242,240,235,0.55);
@@ -398,19 +399,67 @@ footer {
 .hero-cta  { animation: fadeUp 0.6s 0.5s both; }
 
 /* RESPONSIVE */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .stat-card:nth-child(3) { border-right: none; }
+  .stat-card:nth-child(4) { border-right: 1px solid var(--line); border-top: 1px solid var(--line); }
+  .stat-card:nth-child(5) { border-right: none; border-top: 1px solid var(--line); }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .skill-group:nth-child(3n) { border-right: 1px solid var(--line); }
+  .skill-group:nth-child(2n) { border-right: none; }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .stat-card { border-bottom: 1px solid var(--line); }
-  .projects-grid { grid-template-columns: 1fr; }
-  .project-card { border-right: none; }
-  .skills-grid { grid-template-columns: 1fr 1fr; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .contact-left { border-right: none; border-bottom: 1px solid var(--line); }
-  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-  nav { padding: 0 1.5rem; }
+  .hero-number { display: none; }
+  nav { padding: 0 1.2rem; }
   .nav-links { display: none; }
-  .hero { padding: 120px 1.5rem 3rem; }
-  section { padding: 3rem 1.5rem; }
+  .nav-status { font-size: 10px; }
+
+  .hero { padding: 100px 1.2rem 3rem; overflow: hidden; max-width: 100vw; }
+  .hero-number { font-size: clamp(80px, 40vw, 140px); }
+  .hero h1 { font-size: clamp(2rem, 9vw, 3.5rem) !important; margin-bottom: 1.2rem; }
+  .hero-desc { font-size: 13px; max-width: 100%; }
+  .hero-stack { gap: 6px; }
+  .stack-tag { font-size: 9px; padding: 3px 8px; }
+  .hero-cta { flex-direction: column; gap: 8px; }
+  .btn { width: 100%; justify-content: center; padding: 14px 20px; }
+
+  section { padding: 2.5rem 1.2rem; }
+  .section-head { margin-bottom: 2rem; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-card { border-right: 1px solid var(--line) !important; border-bottom: 1px solid var(--line) !important; border-top: none !important; }
+  .stat-card:nth-child(2n) { border-right: none !important; }
+  .stat-card:last-child { border-bottom: none !important; }
+  .stat-num { font-size: 2.2rem; }
+
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { border-right: none !important; border-bottom: 1px solid var(--line) !important; }
+  .project-card:last-child { border-bottom: none !important; }
+
+  .exp-item { grid-template-columns: 1fr; gap: 0.75rem; padding: 1.5rem 0; }
+  .exp-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; }
+  .exp-period { margin-bottom: 0; }
+  .exp-stack { display: none; }
+  .exp-title { font-size: 17px; }
+  .exp-points li { font-size: 12px; }
+
+  .skills-grid { grid-template-columns: 1fr; }
+  .skill-group { border-right: none !important; border-bottom: 1px solid var(--line) !important; }
+  .skill-group:last-child { border-bottom: none !important; }
+
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 1px solid var(--line); padding: 2rem 1.2rem; }
+  .contact-right { padding: 2rem 1.2rem; }
+  .contact-headline { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+
+  footer { flex-direction: column; gap: 8px; text-align: center; padding: 1.2rem; }
+
+  .cursor { display: none; }
+  body { cursor: auto; }
 }
 </style>
 </head>
@@ -736,7 +785,7 @@ footer {
   <div class="contact-grid">
     <div class="contact-left">
       <div class="contact-headline">Let's work<br><span>together.</span></div>
-      <p class="contact-note">Open to QA Engineer / SDET roles in Dublin, EMEA remote, or globally remote. Stamp 4 visa — no sponsorship required. Available immediately.</p>
+      <p class="contact-note">Open to QA Engineer / SDET roles in Dublin, EMEA remote, or globally remote. Stamp 4 visa + Irish passport — no sponsorship required. Available immediately.</p>
     </div>
     <div class="contact-right">
       <div class="contact-links">
