@@ -255,7 +255,7 @@ section { padding: 5rem 2.5rem; border-top: 1px solid var(--line); position: rel
 
 /* PROJECTS */
 .projects-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr);
+  display: grid; grid-template-columns: repeat(3, 1fr);
   border: 1px solid var(--line); gap: 0;
 }
 .project-card {
@@ -264,8 +264,8 @@ section { padding: 5rem 2.5rem; border-top: 1px solid var(--line); position: rel
   position: relative; overflow: hidden;
   transition: background 0.2s;
 }
-.project-card:nth-child(2n) { border-right: none; }
-.project-card:nth-last-child(-n+2) { border-bottom: none; }
+.project-card:nth-child(3n) { border-right: none; }
+.project-card:nth-last-child(-n+3) { border-bottom: none; }
 .project-card:hover { background: var(--gray); }
 
 .project-card::before {
