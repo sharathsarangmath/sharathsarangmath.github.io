@@ -114,6 +114,14 @@ nav {
   position: relative; overflow: hidden;
 }
 
+/* NEBULA CANVAS */
+#nebula {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .hero::after {
   content: '';
   position: absolute; inset: 0;
@@ -511,6 +519,7 @@ footer {
 
 <!-- HERO -->
 <div class="hero">
+  <canvas id="nebula"></canvas>
   <div class="hero-number">QA</div>
   <div class="hero-content">
     <div class="hero-tag">Dublin, Ireland · Available for hire</div>
@@ -862,6 +871,102 @@ document.querySelectorAll('.stat-card, .project-card, .exp-item, .skill-group').
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   observer.observe(el);
 });
+
+/* ── GREEN PARTICLE NEBULA ── */
+(function() {
+  const canvas = document.getElementById('nebula');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  // Mouse position for nebula parallax
+  let mouseX = 0.5, mouseY = 0.5;
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX / window.innerWidth;
+    mouseY = e.clientY / window.innerHeight;
+  });
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  // ── Particles ──
+  const PARTICLES = [];
+  const GREEN = [0, 255, 133]; // #00FF85
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.x    = Math.random() * W;
+      this.y    = init ? Math.random() * H : H + 5;
+      this.vx   = (Math.random() - 0.5) * 0.3;
+      this.vy   = -(0.15 + Math.random() * 0.5);
+      this.size = 0.4 + Math.random() * 1.6;
+      this.life = init ? Math.random() : 0;
+      this.maxL = 0.5 + Math.random() * 0.5;
+      // slight green hue variation
+      this.r = GREEN[0] + Math.floor((Math.random()-0.5)*20);
+      this.g = GREEN[1] + Math.floor((Math.random()-0.5)*20);
+      this.b = GREEN[2] + Math.floor((Math.random()-0.5)*30);
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life += 0.004;
+      if (this.life > this.maxL || this.y < -10) this.reset(false);
+    }
+    draw() {
+      const t = this.life / this.maxL;
+      const alpha = (t < 0.2 ? t / 0.2 : t > 0.75 ? (1 - t) / 0.25 : 1) * 0.65;
+      ctx.fillStyle = `rgba(${this.r},${this.g},${this.b},${alpha})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    PARTICLES.length = 0;
+    const count = Math.min(Math.floor(W * H / 2200), 900);
+    for (let i = 0; i < count; i++) PARTICLES.push(new Particle());
+  }
+
+  // ── Nebula clouds ──
+  const CLOUDS = Array.from({ length: 4 }, (_, i) => ({
+    cx: 0.15 + i * 0.25,
+    cy: 0.2 + (i % 2) * 0.35,
+    r: 0.18 + Math.random() * 0.12
+  }));
+
+  function drawNebula() {
+    CLOUDS.forEach(c => {
+      // parallax offset from mouse
+      const ox = (mouseX - 0.5) * 0.04;
+      const oy = (mouseY - 0.5) * 0.04;
+      const cx = (c.cx + ox) * W;
+      const cy = (c.cy + oy) * H;
+      const r  = c.r * Math.min(W, H);
+
+      const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      grd.addColorStop(0,   'rgba(0,255,133,0.055)');
+      grd.addColorStop(0.4, 'rgba(0,255,133,0.025)');
+      grd.addColorStop(1,   'rgba(0,0,0,0)');
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, W, H);
+    });
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    drawNebula();
+    PARTICLES.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  initParticles();
+  frame();
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+})();
 </script>
 </body>
 </html>
