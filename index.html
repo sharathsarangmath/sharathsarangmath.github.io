@@ -139,7 +139,7 @@ void main() {
     const uRF    = gl.getUniformLocation(prog, 'u_repelForce');
 
     /* ── Particle data ── */
-    const COUNT  = 300000;
+    const COUNT  = window.innerWidth < 768 ? 30000 : window.innerWidth < 1024 ? 120000 : 300000;
     /* Interleaved layout: pos.x, pos.y, vel.x, vel.y, size, alpha = 6 floats */
     const STRIDE = 6;
     const data   = new Float32Array(COUNT * STRIDE);
