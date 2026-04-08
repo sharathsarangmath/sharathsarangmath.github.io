@@ -55,7 +55,7 @@
     const VS = `#version 300 es
 precision highp float;
 
-/* per-particle attributes */
+/* per- attributes */
 in vec2  a_pos;    /* current position (NDC -1..1) */
 in vec2  a_vel;    /* velocity (NDC units/frame) */
 in float a_size;   /* point size px */
@@ -139,7 +139,7 @@ void main() {
     const uRF    = gl.getUniformLocation(prog, 'u_repelForce');
 
     /* ── Particle data ── */
-    const COUNT  = window.innerWidth < 768 ? 30000 : window.innerWidth < 1024 ? 120000 : 300000;
+    const COUNT  = window.innerWidth < 768 ? 5000 : window.innerWidth < 1024 ? 80000 : 300000;
     /* Interleaved layout: pos.x, pos.y, vel.x, vel.y, size, alpha = 6 floats */
     const STRIDE = 6;
     const data   = new Float32Array(COUNT * STRIDE);
