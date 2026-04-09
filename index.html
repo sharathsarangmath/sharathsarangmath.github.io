@@ -92,8 +92,8 @@
   /* ── GREEN PARTICLE NEBULA v6 — WebGL2 GL_POINTS, foreground, mix-blend difference ── */
   (function () {
     const canvas = document.getElementById('nebula');
-    const gl = canvas.getContext('webgl2', { alpha: true, premultipliedAlpha: false })
-            || canvas.getContext('webgl',  { alpha: true, premultipliedAlpha: false });
+    const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false })
+            || canvas.getContext('experimental-webgl',  { alpha: true, premultipliedAlpha: false });
     if (!gl) { canvas.style.display = 'none'; console.warn('WebGL not supported'); return; }
     let W, H;
     let ptrX = -9999, ptrY = -9999;
@@ -105,26 +105,18 @@
     document.addEventListener('touchmove',   e => { const t = e.touches[0]; setPtr(t.clientX, t.clientY); }, { passive: true });
     document.addEventListener('touchend',    clrPtr);
     document.addEventListener('touchcancel', clrPtr);
-    const VS = `#version 300 es
+    const VS = `
 precision highp float;
-in vec2 a_pos; in vec2 a_vel; in float a_size; in float a_alpha;
+attribute vec2 a_pos; attribute vec2 a_vel; attribute float a_size; attribute float a_alpha;
 uniform vec2 u_resolution; uniform vec2 u_pointer; uniform float u_repelRadius; uniform float u_repelForce;
-out float v_alpha;
-void main() {
-  vec2 diff = a_pos - u_pointer; float dist = length(diff); vec2 vel = a_vel;
-  if (dist < u_repelRadius && dist > 0.001) { float s = u_repelForce/(dist*dist); vel += normalize(diff)*s; }
-  float spd = length(vel); if (spd > 0.012) vel = (vel/spd)*0.012;
-  vec2 pos = a_pos + vel;
-  if (pos.x > 1.05) pos.x=-1.05; if (pos.x<-1.05) pos.x=1.05;
-  if (pos.y > 1.05) pos.y=-1.05; if (pos.y<-1.05) pos.y=1.05;
-  gl_Position = vec4(pos,0.0,1.0); gl_PointSize = a_size; v_alpha = a_alpha;
+varying float v_alpha;
 }`;
-    const FS = `#version 300 es
-precision mediump float; in float v_alpha; out vec4 fragColor;
+    const FS = `
+precision mediump float; varying float v_alpha;
 void main() {
   vec2 c = gl_PointCoord-0.5; float r=length(c); if(r>0.5) discard;
   float soft=1.0-smoothstep(0.3,0.5,r);
-  fragColor=vec4(0.0,1.0,0.522,v_alpha*soft);
+  gl_FragColor=vec4(0.0,1.0,0.522,v_alpha*soft);
 }`;
     function compile(type, src) { const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s)); return s; }
     const prog = gl.createProgram();
