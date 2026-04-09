@@ -92,13 +92,9 @@
   /* ── GREEN PARTICLE NEBULA v6 — WebGL2 GL_POINTS, foreground, mix-blend difference ── */
   (function () {
     const oldCanvas = document.getElementById('nebula');
-const canvas = document.createElement('canvas');
-canvas.id = 'nebula';
-canvas.style.cssText = oldCanvas.style.cssText;
-oldCanvas.parentNode.replaceChild(canvas, oldCanvas);
 const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false })
-        || canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
-if (!gl) { canvas.style.display = 'none'; console.warn('WebGL not supported'); return; }
+            || canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
+    if (!gl) { canvas.style.display = 'none'; console.warn('WebGL not supported'); return; }
     let W, H;
     let ptrX = -9999, ptrY = -9999;
     function setPtr(x, y) { ptrX = x; ptrY = y; }
