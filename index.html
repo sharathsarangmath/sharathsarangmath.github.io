@@ -142,7 +142,7 @@ void main() {
     function gauss() { let u,v; do{u=Math.random();}while(!u); do{v=Math.random();}while(!v); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
     const BH=0.05, RK=0.20, SG=0.28;
     function spawnNDC() { let r; do{r=RK+gauss()*SG;}while(r<BH||r>1.2); const a=Math.random()*2*Math.PI; return[Math.cos(a)*r,Math.sin(a)*r]; }
-    function initData() { for(let i=0;i<COUNT;i++){const b=i*STRIDE,[x,y]=spawnNDC();data[b]=x;data[b+1]=y;data[b+2]=(Math.random()-0.5)*0.004;data[b+3]=(Math.random()-0.5)*0.004;data[b+4]=1.0+Math.random()*4.0;data[b+5]=0.12+Math.random()*0.28;} }
+    function initData() { for(let i=0;i<COUNT;i++){const b=i*STRIDE,[x,y]=spawnNDC();data[b]=x;data[b+1]=y;data[b+2]=(Math.random()-0.5)*0.004;data[b+3]=(Math.random()-0.5)*0.004;data[b+4]=1.0+Math.random()*3.0;data[b+5]=0.12+Math.random()*0.28;} }
     const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
     function uploadBuffer(){gl.bufferData(gl.ARRAY_BUFFER,data,gl.DYNAMIC_DRAW);}
     function setupAttribs(){const bytes=STRIDE*4;gl.enableVertexAttribArray(aPos);gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,bytes,0);gl.enableVertexAttribArray(aVel);gl.vertexAttribPointer(aVel,2,gl.FLOAT,false,bytes,8);gl.enableVertexAttribArray(aSize);gl.vertexAttribPointer(aSize,1,gl.FLOAT,false,bytes,16);gl.enableVertexAttribArray(aAlpha);gl.vertexAttribPointer(aAlpha,1,gl.FLOAT,false,bytes,20);}
