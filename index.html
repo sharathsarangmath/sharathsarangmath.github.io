@@ -136,7 +136,7 @@ void main() {
     const aSize=gl.getAttribLocation(prog,'a_size'), aAlpha=gl.getAttribLocation(prog,'a_alpha');
     const uRes=gl.getUniformLocation(prog,'u_resolution'), uPtr=gl.getUniformLocation(prog,'u_pointer');
     const uRR=gl.getUniformLocation(prog,'u_repelRadius'), uRF=gl.getUniformLocation(prog,'u_repelForce');
-    const COUNT = window.innerWidth < 768 ? 12000 : window.innerWidth < 1024 ? 15000 : 500000;
+    const COUNT = window.innerWidth < 768 ? 15000 : window.innerWidth < 1024 ? 30000 : 1000000;
     const STRIDE = 6;
     const data = new Float32Array(COUNT * STRIDE);
     function gauss() { let u,v; do{u=Math.random();}while(!u); do{v=Math.random();}while(!v); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
